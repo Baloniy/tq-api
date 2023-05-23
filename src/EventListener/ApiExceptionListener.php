@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\EventListener;
 
-use App\Model\ErrorDebugDetails;
-use App\Model\ErrorResponse;
+use App\Dto\ErrorDebugDetails;
+use App\Dto\ErrorResponse;
 use App\Service\ExceptionHandler\ExceptionMapping;
 use App\Service\ExceptionHandler\ExceptionMappingResolver;
 use Psr\Log\LoggerInterface;

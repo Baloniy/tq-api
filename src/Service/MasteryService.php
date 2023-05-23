@@ -1,41 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
-use App\Entity\Mastery;
-use App\Model\Mastery\Mastery as MasteryModel;
-use App\Model\Mastery\MasteryList;
+use App\Dto\Mastery\MasteryDto;
+use App\DtoMapper\MasteryMapper;
+use App\Dto\Mastery\MasteryListItemDto;
+use App\Dto\Mastery\MasteryListDto;
 use App\Repository\MasteryRepository;
 
 readonly class MasteryService
 {
     public function __construct(
-        private MasteryRepository $masteryRepository
+        private MasteryRepository $masteryRepository,
+        private MasteryMapper     $masteryMapper
     ) {
     }
 
-    public function getMasteryList(): MasteryList
+    public function getMasteryList(): MasteryListDto
     {
-        $items = array_map(
-            static fn (Mastery $mastery): MasteryModel => new MasteryModel(
-                id: $mastery->getId(),
-                name: $mastery->getName(),
-                description: $mastery->getDescription()
-            ),
+        return $this->masteryMapper->mapMasteryListToDto(
             $this->masteryRepository->findAllSortedByName()
         );
-
-        return new MasteryList($items);
     }
 
-    public function getMastery(int $id): MasteryModel
+    public function getMastery(int $id): MasteryDto
     {
-        $mastery = $this->masteryRepository->findOneById($id);
-
-        return new MasteryModel(
-            id: $mastery->getId(),
-            name: $mastery->getName(),
-            description: $mastery->getDescription()
+        return $this->masteryMapper->mapMasteryToDto(
+            $this->masteryRepository->findOneById($id)
         );
     }
 }

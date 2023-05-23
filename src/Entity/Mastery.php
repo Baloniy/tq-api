@@ -6,6 +6,8 @@ namespace App\Entity;
 
 use DateTimeImmutable;
 use App\Repository\MasteryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'mastery')]
@@ -17,6 +19,12 @@ class Mastery
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\OneToMany(mappedBy: 'mastery', targetEntity: MasteryProgression::class)]
+    private Collection $progressions;
+
+    #[ORM\OneToMany(mappedBy: 'mastery', targetEntity: Skill::class)]
+    private Collection $skills;
 
     #[ORM\Column(name: 'created_at', type: 'datetime_immutable')]
     private DateTimeImmutable $created_at;
@@ -33,6 +41,8 @@ class Mastery
         #[ORM\Column(type: 'text', nullable: true)]
         private ?string $description = null
     ) {
+        $this->progressions = new ArrayCollection();
+        $this->skills = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -68,6 +78,16 @@ class Mastery
     public function setDescription(?string $description): void
     {
         $this->description = $description;
+    }
+
+    public function getProgressions(): Collection
+    {
+        return $this->progressions;
+    }
+
+    public function getSkills(): Collection
+    {
+        return $this->skills;
     }
 
     public function getCreatedAt(): DateTimeImmutable

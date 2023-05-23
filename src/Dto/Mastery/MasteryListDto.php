@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Mastery;
+namespace App\Dto\Mastery;
 
-class MasteryList
+readonly class MasteryListDto
 {
-    /** @param Mastery[] $items */
+    /** @param MasteryListItemDto[] $items */
     public function __construct(
-        private readonly array $items
+        private array $items
     ) {
     }
 

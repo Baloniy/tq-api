@@ -5,46 +5,68 @@ declare(strict_types=1);
 namespace App\Tests\Service;
 
 use App\Entity\Mastery;
-use App\Model\Mastery\MasteryList;
-use App\Model\Mastery\Mastery as MasteryModel;
+use App\DtoMapper\MasteryMapper;
 use App\Repository\MasteryRepository;
 use App\Service\MasteryService;
 use App\Tests\AbstractTestCase;
 
 class MasteryServiceTest extends AbstractTestCase
 {
-    public function testGetMasteryList(): void
+    private Mastery $entity;
+
+    private MasteryRepository $repository;
+
+    private MasteryMapper $mapper;
+
+    protected function setUp(): void
     {
-        $mastery = new Mastery(
-            name: 'Dream',
-            slug: 'dream',
-            tag: 'xtagSkillDreamName001',
-            image: 'dream.png',
-            description: 'Drawing power from the dream world'
+        $params = [
+            'id' => 1,
+            'name' => 'Dream',
+            'slug' => 'dream',
+            'tag' => 'xtagSkillDreamName001',
+            'image' => 'dream.png',
+            'description' => 'Drawing power from the dream world',
+        ];
+
+        $this->entity = new Mastery(
+            name: $params['name'],
+            slug: $params['slug'],
+            tag: $params['tag'],
+            image: $params['image'],
+            description: $params['description']
         );
-        $this->setEntityId($mastery, 1);
+        $this->setEntityId($this->entity, $params['id']);
 
-        $repository = $this->createMock(MasteryRepository::class);
-
-        $repository->expects($this->once())
-            ->method('findAllSortedByName')
-            ->willReturn([$mastery]);
-
-        $service = new MasteryService($repository);
-
-        $expected = new MasteryList([
-            new MasteryModel(
-                id: 1,
-                name: 'Dream',
-                description: 'Drawing power from the dream world'
-            )
-        ]);
-
-        $this->assertEquals($expected, $service->getMasteryList());
+        $this->repository = $this->createMock(MasteryRepository::class);
+        $this->mapper = new MasteryMapper();
     }
 
-    public function testGetMastery()
+    public function testGetMasteryList(): void
     {
+        $this->repository->expects($this->once())
+            ->method('findAllSortedByName')
+            ->willReturn([$this->entity]);
 
+        $expected = $this->mapper->mapMasteryListToDto([$this->entity]);
+
+        $this->assertEquals($expected, $this->createService()->getMasteryList());
+    }
+
+    public function testGetMastery(): void
+    {
+        $this->repository->expects($this->once())
+            ->method('findOneById')
+            ->with(1)
+            ->willReturn($this->entity);
+
+        $expected = $this->mapper->mapMasteryToDto($this->entity);
+
+        $this->assertEquals($expected, $this->createService()->getMastery(1));
+    }
+
+    private function createService(): MasteryService
+    {
+        return new MasteryService($this->repository, $this->mapper);
     }
 }
