@@ -45,7 +45,7 @@ class ExceptionMappingResolverTest extends TestCase
     public function testResolvesLoggable(): void
     {
         $resolver = new ExceptionMappingResolver([
-            LogicException::class => ['code' => 500, 'loggable' => true]
+            LogicException::class => ['code' => 500, 'loggable' => true],
         ]);
 
         $mapping = $resolver->resolve(LogicException::class);

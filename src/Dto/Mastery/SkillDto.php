@@ -7,13 +7,13 @@ namespace App\Dto\Mastery;
 readonly class SkillDto
 {
     public function __construct(
-        private int  $id,
-        private string  $name,
-        private string  $tag,
-        private int     $tear,
-        private int     $column,
-        private int     $maximumLevel,
-        private string  $type,
+        private int $id,
+        private string $name,
+        private string $tag,
+        private int $tear,
+        private int $column,
+        private int $maximumLevel,
+        private string $type,
         private ?string $icon = null,
         private ?int $coolDown = null,
         private ?string $description = null,

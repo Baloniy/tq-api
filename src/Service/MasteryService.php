@@ -6,7 +6,6 @@ namespace App\Service;
 
 use App\Dto\Mastery\MasteryDto;
 use App\DtoMapper\MasteryMapper;
-use App\Dto\Mastery\MasteryListItemDto;
 use App\Dto\Mastery\MasteryListDto;
 use App\Repository\MasteryRepository;
 
@@ -14,7 +13,7 @@ readonly class MasteryService
 {
     public function __construct(
         private MasteryRepository $masteryRepository,
-        private MasteryMapper     $masteryMapper
+        private MasteryMapper $masteryMapper
     ) {
     }
 

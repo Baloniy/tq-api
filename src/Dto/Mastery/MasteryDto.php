@@ -7,7 +7,7 @@ namespace App\Dto\Mastery;
 readonly class MasteryDto
 {
     public function __construct(
-        private int    $id,
+        private int $id,
         private string $name,
         private string $slug,
         private string $tag,

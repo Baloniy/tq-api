@@ -42,7 +42,7 @@ class MasteryMapper
                 tear: $skill->getTier(),
                 column: $skill->getColumn(),
                 maximumLevel: $skill->getMaximumLevel(),
-                type: $skill->getType()->value,
+                type: $skill->getType(),
                 icon: $skill->getIcon(),
                 coolDown: $skill->getCoolDown(),
                 description: $skill->getDescription()
@@ -60,7 +60,6 @@ class MasteryMapper
             skills: $skills
         );
     }
-
 
     public function mapMasteryListToDto(array $masteries): MasteryListDto
     {

@@ -17,6 +17,6 @@ abstract class AbstractFixture extends Fixture
 
     public static function getData(): array
     {
-        return self::$data;
+        return static::$data;
     }
 }

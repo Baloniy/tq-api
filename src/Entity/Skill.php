@@ -26,7 +26,7 @@ class Skill
         #[ORM\ManyToOne(targetEntity: Mastery::class, inversedBy: 'skills')]
         private readonly ?Mastery $mastery,
         #[ORM\Column(type: 'string', length: 255)]
-        private readonly string  $name,
+        private readonly string $name,
         #[ORM\Column(name: 'tag', type: 'string', length: 255)]
         private readonly string $tag,
         #[ORM\Column(type: 'integer')]
@@ -46,9 +46,9 @@ class Skill
         #[ORM\Column(type: 'text', nullable: true)]
         private readonly ?string $description = null,
         #[ORM\Column(type: 'json', nullable: true)]
-        private readonly ?array  $properties = null,
+        private readonly ?array $properties = null,
         #[ORM\Column(type: 'json', nullable: true)]
-        private readonly ?array  $summons = null,
+        private readonly ?array $summons = null,
     ) {
     }
 
@@ -87,9 +87,9 @@ class Skill
         return $this->maximumLevel;
     }
 
-    public function getType(): SkillType
+    public function getType(): string
     {
-        return $this->type;
+        return $this->type->type();
     }
 
     public function getParent(): ?string
@@ -126,6 +126,7 @@ class Skill
     {
         return $this->created_at;
     }
+
     #[ORM\PrePersist]
     public function setCreatedAtValue(): void
     {

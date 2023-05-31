@@ -33,7 +33,7 @@ class MasteryControllerTest extends AbstractControllerTest
     {
         $masteryFixture = MasteryFixtures::getRow();
 
-        $this->client->request('GET', $this->uri.'/1');
+        $this->client->request('GET', $this->uri . '/1');
 
         $responseContent = $this->extractDataFromResponse();
 
