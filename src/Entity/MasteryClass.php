@@ -28,7 +28,7 @@ class MasteryClass
         #[ORM\Column(type: 'string', length: 255)]
         private readonly string $name,
         #[ORM\Column(type: 'string', length: 255, nullable: true)]
-        private readonly ?string $description
+        private readonly ?string $description = null
     ) {
     }
 
