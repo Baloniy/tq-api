@@ -6,6 +6,7 @@
 parameters:
     exceptions:
         App\Exception\MasteryNotFoundException: { code: 404 }
+        App\Exception\RequestBodyConvertException: { code: 404 }
 
 services:
     # default configuration for services in *this* file
@@ -30,3 +31,11 @@ services:
 
     App\Service\ExceptionHandler\ExceptionMappingResolver:
         arguments: ['%exceptions%']
+
+    App\EventListener\ApiExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, priority: 10 }
+
+    App\EventListener\ValidationExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, priority: 15 }

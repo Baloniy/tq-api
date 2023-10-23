@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Character;
+use App\Exception\CharacterNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,6 +40,22 @@ class CharacterRepository extends ServiceEntityRepository
         }
     }
 
+    public function findOneById(int $id): Character
+    {
+        $character = $this->find($id);
+
+        if ($character === null) {
+            throw new CharacterNotFoundException();
+        }
+
+        return $character;
+    }
+
+    public function existsByName(string $name): bool
+    {
+        return $this->findOneBy(['name' => $name]) !== null;
+    }
+
 //    /**
 //     * @return Character[] Returns an array of Character objects
 //     */
@@ -63,4 +80,5 @@ class CharacterRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
 }
