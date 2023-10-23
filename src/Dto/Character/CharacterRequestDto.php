@@ -10,7 +10,19 @@ readonly class CharacterRequestDto
 {
     public function __construct(
         #[Assert\NotBlank]
-        private string $name
+        private string $name,
+        #[Assert\NotBlank]
+        private int $class_id
     ) {
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getClassId(): int
+    {
+        return $this->class_id;
     }
 }

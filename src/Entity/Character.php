@@ -13,6 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\HasLifecycleCallbacks]
 class Character
 {
+    private const INITIAL_HEALTH = 300;
+    private const INITIAL_MANA = 300;
+    private const INITIAL_DEXTERITY = 50;
+    private const INITIAL_INTELLIGENCE = 50;
+    private const INITIAL_STRENGTH = 50;
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -33,15 +40,15 @@ class Character
         #[ORM\Column(type: 'string', length: 255)]
         private readonly string $name,
         #[ORM\Column(name: 'health', type: 'smallint', length: 10)]
-        private readonly int $health = 300,
+        private readonly int $health = self::INITIAL_HEALTH,
         #[ORM\Column(name: 'mana', type: 'smallint', length: 10)]
-        private readonly int $mana = 300,
+        private readonly int $mana = self::INITIAL_MANA,
         #[ORM\Column(name: 'dexterity', type: 'smallint', length: 5)]
-        private readonly int $dexterity = 50,
+        private readonly int $dexterity = self::INITIAL_DEXTERITY,
         #[ORM\Column(name: 'intelligence', type: 'smallint', length: 5)]
-        private readonly int $intelligence = 50,
+        private readonly int $intelligence = self::INITIAL_INTELLIGENCE,
         #[ORM\Column(name: 'strength', type: 'smallint', length: 5)]
-        private readonly int $strength = 50,
+        private readonly int $strength = self::INITIAL_STRENGTH,
         #[ORM\Column(name: 'defence', type: 'smallint', length: 5)]
         private readonly int $defence = 0,
         #[ORM\Column(name: 'average_damage', type: 'smallint', length: 5)]

@@ -6,18 +6,37 @@ namespace App\Controller;
 
 use App\Attribute\RequestBody;
 use App\Dto\Character\CharacterRequestDto;
+use App\Service\CharacterService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CharacterController extends AbstractController
 {
-    #[Route('/character', name: 'app_character_new', methods: ["POST"])]
-    public function action(#[RequestBody] CharacterRequestDto $requestDto): JsonResponse
+    public function __construct(
+        private readonly CharacterService $service
+    ) {
+    }
+
+    #[Route(path: '/api/character', name: 'app_characters', methods: ["GET"])]
+    public function index(): JsonResponse
     {
+        return $this->json($this->service->getAllUserCharacters());
+    }
+
+    #[Route(path: '/api/character/{id}', name: 'app_character_item', methods: ["GET"])]
+    public function item(int $id): JsonResponse
+    {
+        return $this->json($this->service->getCharacter($id));
+    }
+
+    #[Route(path: '/api/character', name: 'app_character_new', methods: ["POST"])]
+    public function create(#[RequestBody] CharacterRequestDto $characterRequestDto): JsonResponse
+    {
+        $this->service->create($characterRequestDto);
+
         return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/CharacterController.php',
+            'message' => 'Character was created successfully!',
         ]);
     }
 }
